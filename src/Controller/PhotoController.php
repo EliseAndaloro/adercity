@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Photo;
-use App\Form\Photo1Type;
+use App\Form\PhotoType;
 use App\Repository\PhotoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -19,12 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class PhotoController extends AbstractController
 {
     /**
-     * Return the view to see all photos, there are 8photos/pages
+     * Return the view to see all photos, there are 8photos/page
      * @Route("/", name="photo_index", methods={"GET"})
      */
     public function index(PhotoRepository $photoRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $photos = $paginator->paginate($photoRepository->findAll(), $request->query->getInt('page',1), 8);
+        $photos = $paginator->paginate($photoRepository->findAll(), $request->query->getInt('page',1), 5);
         return $this->render('photo/index.html.twig', [
             'photos' => $photos,
         ]);
