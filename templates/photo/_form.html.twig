@@ -1,4 +1,6 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn-primary">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="text-center" id="form">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">{{ button_label|default('Add photo') }}</button>
+    {{ form_end(form) }}
+</div>

@@ -19,26 +19,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class PhotoController extends AbstractController
 {
     /**
+     * Return the view to see all photos, there are 8photos/pages
      * @Route("/", name="photo_index", methods={"GET"})
      */
     public function index(PhotoRepository $photoRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $photos = $paginator->paginate($photoRepository->findAll(), $request->query->getInt('page',1), 5);
+        $photos = $paginator->paginate($photoRepository->findAll(), $request->query->getInt('page',1), 8);
         return $this->render('photo/index.html.twig', [
             'photos' => $photos,
         ]);
     }
 
     /**
+     * Return the view to add a photo or if the form is submitted it persists data and return the view to see all photos
      * @Route("/add", name="photo_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
         $photo = new Photo();
-        $form = $this->createForm(Photo1Type::class, $photo);
+        $form = $this->createForm(PhotoType::class, $photo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Save img in public/uploads directory with a unique name
             $file = $form->get('file')->getData();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
             $file->move(
@@ -71,6 +75,7 @@ class PhotoController extends AbstractController
     }
 
     /**
+     * Show a photo 
      * @Route("/{slug}", name="photo_show", methods={"GET"})
      */
     public function show(Photo $photo): Response
@@ -82,6 +87,7 @@ class PhotoController extends AbstractController
 
 
     /**
+     * Allowed only for admin
      * @IsGranted("ROLE_ADMIN")
      * 
      * @Route("/{id}", name="photo_delete", methods={"DELETE"})

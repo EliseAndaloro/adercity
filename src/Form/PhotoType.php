@@ -8,8 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Photo1Type extends AbstractType
+class PhotoType extends AbstractType
 {
+    // Build the form with an input title and an input file
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -22,6 +23,7 @@ class Photo1Type extends AbstractType
         ;
     }
 
+    // Configure the Entity Photo to build the form
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

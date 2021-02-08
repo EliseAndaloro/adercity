@@ -4,26 +4,22 @@
 
 {% block body %}
 
-    <header>
-        <h1 class="text-center p-3" style="background-color:#cce3e1; color:#277d75;">Photos</h1>
-    </header>
-
-    {% for photo in photos %}
-        <div class="text-center">
-        <a href="{{ path('photo_show', {'slug': photo.slug}) }}">
-            <img id="home_photo_{{photo.id}}" onmouseover="showTitle({{photo.id}})" onmouseout="hideTitle({{photo.id}})" src="{{ asset('/uploads/'~photo.filename) }}" alt="">
-        </a>
-        <div class="title" id="title_{{photo.id}}">{{ photo.title }}</div>
-        </div>
-
-    {% else %}
-        <td colspan="5">no records found</td>
-    {% endfor %}
-    <div class="text-center">
-        {{ knp_pagination_render(photos) }}
+    <a class="btn btn-success" id="add_photo" href="{{ path('photo_new') }}">Add a photo</a>
+    <div class="row" id="photos_container">
+        {% for photo in photos %}
+            <figure class="col-md-4 pt-2 pb-2 snip0016">
+                
+                    <img id="home_photo_{{photo.id}}" src="{{ asset('/uploads/'~photo.filename) }}" alt="">
+                
+                <figcaption class="title" id="title_{{photo.id}}">
+                    <h2>{{ photo.title }}</h2>
+                    <a href="{{ path('photo_show', {'slug': photo.slug}) }}"></a>
+                </figcaption>
+            </figure>
+        {% endfor %}
     </div>
- 
-    </nav>
-    <a href="{{ path('photo_new') }}">Create new</a>
+
+    {{ knp_pagination_render(photos) }}
+
 
 {% endblock %}

@@ -96,8 +96,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             return new RedirectResponse($targetPath);
         }
 
+        // Redirect to the view of the list of photo after authentification
         return new RedirectResponse($this->urlGenerator->generate('photo_index'));
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl()
